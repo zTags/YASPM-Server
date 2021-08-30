@@ -24,45 +24,39 @@ async fn run(req: Request<Body>) -> Result<Response<Body>, Infallible> {
         let path = req.uri().path();
 
         if path.starts_with("/lib/") {
-            // test further for what the client specifially wants
-            if path.starts_with("/lib/dependencies"){
-                // return dependencies
-                let libname = &path[18..];
-                println!("request for dependencies of: {}", libname);
-                // check if lib exists
-                let mut path = inner_main().expect("error getting the directory the exe resides in.");
-                path.push("libs");
-                path.push(libname);
-                path.push("dependencies.json");
+            let libname = &path[18..];
+            println!("request for lib {}", libname);
+            let mut path = inner_main().expect("error getting the directory the exe resides in.");
+            path.push("libs");
+            path.push(libname + ".spwn");
 
-                *response.body_mut() = Body::from(fs::read_to_string(path).expect("error reading file."));
-                *response.status_mut() = StatusCode::OK;
+            let libcode = fs::read_to_string(path).expect("error reading file.");
+            *response.status_mut() = StatusCode::OK; 
+            path.pop();
+            path.push("dependencies");
+            let dependencies = fs::read_to_string(path);
 
-            } else {
-                let libname = &path[5..];
-                println!("request for lib: {}", libname);
-                // get lib
-                let mut path = inner_main().expect("error getting the directory the exe resides in.");
-                path.push("libs");
-                path.push(libname);
-                path.push("lib.spwn");
-                
-                *response.body_mut() = Body::from(fs::read_to_string(path).expect("error reading file."));
-                *response.status_mut() = StatusCode::OK;
-                                
+            let response = "{\n \"dependencies\": [ ";
+            let dependencies_arr = dependencies.split(" ");
+
+            for dep in dependencies_arr {
+                response = response + " \"" + dep " \", ";
             }
+            
+            response = &response[..response.len()-2];
+            response = response + "],\n";
+
+            response = response + "\"code\": \"";
+            response = response + libcode + "\" \n }";
+        }
 
         } else if path == "/" {
-            *response.body_mut() = Body::from("Welcome to PCKP!");
+            *response.body_mut() = Body::from("Welcome to YASPM");
 
         } else {
             // return 404
             *response.status_mut() =  StatusCode::NOT_FOUND;
         }
-    }
-
-
-
     Ok(response)
 }
 
