@@ -2,15 +2,13 @@
 
 ## usage
 
-### getting the server
-currently you need to `git clone` the repo, there'll be a npm package if this ever goes somewhere
-
 ### setting up
 open a terminal and run
 ```sh
-$ npm i -g yaspm-server
+$ npm i yaspm-server
 ```
-this should install everything you need to run a yaspm server
+this should install everything you need to run a yaspm server <br>
+you could install this globally, but because it currently puts its files in your CWD its not reccomended
 
 
 ### development
