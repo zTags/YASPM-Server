@@ -15,8 +15,6 @@ if (!existsSync(__dirname + "/yaspm/config.json")) {
 const yaspm = express();
 const config = JSON.parse(readFileSync(__dirname + "/yaspm/config.json", {encoding: "utf8"}));
 
-console.log(config);
-
 // set up routing
 yaspm.get("/api/v1/package/meta", async (req, res) => {
     // verify integrity of request

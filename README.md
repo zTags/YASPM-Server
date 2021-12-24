@@ -6,9 +6,17 @@
 currently you need to `git clone` the repo, there'll be a npm package if this ever goes somewhere
 
 ### setting up
+open a terminal and run
+```sh
+$ npm i -g yaspm-server
+```
+this should install everything you need to run a yaspm server
+
+
+### development
 just run the following commands while being in your clone's root
 ```sh
-$ npm i --only=prod # remove the --only=prod here if you want to contribute
+$ npm i
 $ npm run build
 $ npm run start # this will generate a default config for you, you can customize it in config.json at the root
 ```

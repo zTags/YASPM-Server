@@ -4,6 +4,7 @@
   "description": "Serverside for YASPM",
   "type": "module",
   "main": "js/index.js",
+  "bin": "js/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node ./js/index.js",
