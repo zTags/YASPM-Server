@@ -1,6 +1,7 @@
 import express from "express";
 import { existsSync, writeFileSync, mkdirSync, readFileSync } from "fs";
-import { readFile } from "fs/promises";
+import { packageData, packageMeta } from "./get"
+import { createAccount } from "./post";
 const __dirname = process.cwd();
 
 // verify the runtime files exist
@@ -16,36 +17,10 @@ const yaspm = express();
 const config = JSON.parse(readFileSync(__dirname + "/yaspm/config.json", {encoding: "utf8"}));
 
 // set up routing
-yaspm.get("/api/v1/package/meta", async (req, res) => {
-    // verify integrity of request
-    if (req.query.package == undefined) {
-        res.status(400).send("request requires a package parameter");
-        console.log(`[YASPM] malformed request from ${req.ip}`);
-        return;
-    }
-    console.log(`[YASPM] request for package ${req.query.package}'s metadata from ${req.ip}`);
-    if (req.query.package.toString().includes("..")) {
-        res.status(418).send("im a teapot");
-    } else {
-        res.sendFile(`${__dirname}/yaspm/packages/${req.query.package}/meta.json`);
-    }
-});
+yaspm.get("/api/v1/package/meta", packageMeta);
+yaspm.get("/api/v1/package/data", packageData);
 
-yaspm.get("/api/v1/package/data", async (req, res) => {
-    // verify integrity of request
-    if (req.query.package == undefined) {
-        res.status(400).send("request requires a package parameter");
-        console.log(`[YASPM] malformed request from ${req.ip}`);
-        return;
-    }
-    console.log(`[YASPM] request for package ${req.query.package}'s data from ${req.ip}`);
-    
-    if (req.query.package.toString().includes("..")) {
-        res.status(418).send("im a teapot");
-    } else {
-        res.sendFile(`${__dirname}/yaspm/packages/${req.query.package}/package.tar.gz`);
-    }
-});
+yaspm.post("/api/v1/account/create", createAccount);
 
 yaspm.listen(config.port, () => {
     console.log(`[YASPM] Serving at port ${config.port}`);
