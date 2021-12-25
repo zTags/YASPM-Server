@@ -25,8 +25,14 @@ comig son
 ### scopes
 because i like npm, there's an option to publish packages under scopes (`@scope/package`) to avoid naming conflicts
 
+## about
+### versioning
+versioning is pretty simple, a client will always work with server aslong the client has a equal or greater version
+
 ## todo before release
+- [x] user accounts
 - [ ] uploading packages
 - [x] metadata and getting packages
+- [ ] a [client](https://github.com/zTags/YASPM-Client);
 
 # thanks for using yaspm
