@@ -8,7 +8,7 @@ open a terminal and run
 $ npm i yaspm-server
 ```
 this should install everything you need to run a yaspm server <br>
-you could install this globally, but because it currently puts its files in your CWD its not reccomended
+you could install this globally, but because it currently puts its files in your CWD its not recommended
 
 
 ### development
@@ -33,6 +33,6 @@ versioning is pretty simple, a client will always work with server aslong the cl
 - [x] user accounts
 - [ ] uploading packages
 - [x] metadata and getting packages
-- [ ] a [client](https://github.com/zTags/YASPM-Client);
+- [ ] a [client](https://github.com/zTags/YASPM-Client)
 
 # thanks for using yaspm
